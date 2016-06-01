@@ -30,10 +30,11 @@ CPU::~CPU() {
 };
 
 void CPU::run(int argc, const char *argv[]) {
-
+    int inSize = sizeof(int);
+    std::printf("%d",inSize);
     int instructions[] = {
-            CALL, 19, 0, //3+
             DEBUG,      //1+
+            CALL, 19, 0, //3+
             ICONST, 25, //2+
             GISTORE, 0, //2+
             GILOAD, 0,  //2+
@@ -76,7 +77,7 @@ void CPU::run(int argc, const char *argv[]) {
     while (g_running) {
         int opcode = (int)g_codeMemory[g_ip];
         if(g_debug){
-            std::printf("CP:%04d\t Inst:%d\r\n", g_ip, opcode);
+            std::printf("g_ip:%04d\t opcode:%d\r\n", g_ip, opcode);
         }
 
         g_ip++;

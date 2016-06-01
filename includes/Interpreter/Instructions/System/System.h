@@ -51,7 +51,10 @@ void iload(){
 
 }
 */
+static const int MAIN = 0x07;
+void main(){
 
+}
 static const int ICONST = 0x09;
 void iconst(){
 
