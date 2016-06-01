@@ -9,6 +9,7 @@
 using namespace std;
 
 CPU::CPU() {
+    running = true;
     int instructions[] = {
             BC::ICONST, 800,
             BC::GSTORE, 1,
@@ -59,9 +60,11 @@ void CPU::print(const char *msg) {
 
 void CPU::run() {
 
-    while (_running) {
+    while (running) {
         int opcode = codeMemory[ip];
-        std::printf("CP:%04d\t Inst:%d\r\n", ip, opcode);
+        if(debug){
+            std::printf("CP:%04d\t Inst:%d\r\n", ip, opcode);
+        }
 
         ip++;
 

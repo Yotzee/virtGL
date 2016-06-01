@@ -12,9 +12,10 @@ public:
     int ip = 0; //instruction pointer
     int sp = 0; //stack pointer
     int *stack;
+    bool debug;
     int *codeMemory;
     int *dataMemory;
-    bool _running = true;
+    bool running;
 
 
     CPU();
