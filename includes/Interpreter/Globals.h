@@ -8,11 +8,12 @@
 static int g_fp = 0; //frame pointer
 static int g_ip = 0; //instruction pointer
 static int g_sp = -1; //g_stack pointer
-static int *g_stack;
-static bool g_debug;
-static int *g_codeMemory;
-static int *g_dataMemory;
-static bool g_running;
+static char* g_stack;
+static char *g_codeMemory;
+static char *g_dataMemory;
 
+
+static bool g_running;
+static bool g_debug;
 
 #endif //VIRTGL_GLOBALS_H

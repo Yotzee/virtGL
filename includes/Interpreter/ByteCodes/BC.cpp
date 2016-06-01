@@ -7,10 +7,8 @@
 
 BC::BC() {
     //BC Constructor
-    instructions = new int[65535];
 }
 
 BC::~BC(){
     //BC Destructor
-    delete[] instructions;
 }

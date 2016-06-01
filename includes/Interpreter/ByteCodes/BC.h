@@ -13,11 +13,7 @@ public:
 
     ~BC();
 
-    int* instructions = NULL;
-
-
-
-    static const int POP = 0x01;
+    static const int BPOP = 0x01;
     static const int PUSH = 0x02;
 
     static const int RET = 0x07;

@@ -3,20 +3,21 @@
 //
 
 #include "../includes.h"
+#include "../Globals.h"
 #include "CPU.h"
 #include "../ByteCodes/BC.h"
+#include "../Instructions/Math/Integer.h"
+#include "../Instructions/System/Print.h"
+#include "../Instructions/System/System.h"
 
 CPU::CPU() {
     g_running = true;
-    dataSize = 100;
-    codeSize = 11;
-    stackSize = 100;
-    startPoint = 0;
 
-    int instructions[] = {
-            BC::ICONST, 800,
-            BC::GSTORE, 0,
-            BC::GLOAD, 0,
+
+    char instructions[] = {
+            BC::ICONST, 55,
+            //BC::GSTORE, 0,
+            //BC::GLOAD, 0,
             BC::ICONST, 45,
             BC::IADD,
             BC::IPRINT,
@@ -28,39 +29,36 @@ CPU::CPU() {
     g_fp = 0;
     g_ip = startPoint;
     g_sp = -1;
+    codeSize = sizeof(instructions);
+    dataSize = 100;
+    stackSize = 100;
+    startPoint = 0;
 
-    g_stack = new int[stackSize];
-    memset(g_stack, 0, stackSize * sizeof(int));
+    g_stack = (char*)malloc(stackSize * sizeof(char));
+    memset(g_stack, 0, stackSize * sizeof(char));
 
-    g_codeMemory = new int[sizeof(instructions)];
-    memset(g_codeMemory, 0, codeSize * sizeof(int));
+    g_codeMemory = (char*)malloc(stackSize * sizeof(char));
+    memset(g_codeMemory, 0, codeSize * sizeof(char));
 
-    g_dataMemory = new int[dataSize];
-    memset(g_dataMemory, 0, dataSize * sizeof(int));
+    g_dataMemory = (char*)malloc(stackSize * sizeof(char));
+    memset(g_dataMemory, 0, dataSize * sizeof(char));
 
 
     loadInstructionSet(instructions);
+
 };
 
 CPU::~CPU() {
 
-    delete[] g_stack;
-    delete[] g_codeMemory;
-    delete[] g_dataMemory;
+    free(g_stack);
+    free(g_codeMemory);
+    free(g_dataMemory);
 };
-
-void CPU::iprint(int msg) {
-    std::printf("SYSOUT: %d\r\n", msg);
-}
-
-void CPU::print(const char *msg) {
-    std::printf("SYSOUT: %s\r\n", msg);
-}
 
 void CPU::run(int argc, const char *argv[]) {
     g_debug = true;
     while (g_running) {
-        int opcode = g_codeMemory[g_ip];
+        int opcode = (int)g_codeMemory[g_ip];
         if(g_debug){
             std::printf("CP:%04d\t Inst:%d\r\n", g_ip, opcode);
         }
@@ -68,53 +66,49 @@ void CPU::run(int argc, const char *argv[]) {
         g_ip++;
 
         switch (opcode) {
+
             case BC::IADD : {
-                int b = g_stack[g_sp--];
-                int a = g_stack[g_sp--];
-                g_stack[++g_sp] = a + b;
+                iadd();
                 break;
             }
             case BC::ISUB : {
-                int b = g_stack[g_sp--];
-                int a = g_stack[g_sp--];
-                g_stack[++g_sp] = a - b;
                 break;
             }
             case BC::IPRINT : {
-                int i = g_stack[g_sp--];
-                iprint(i);
+                iprint();
                 break;
             }
             case BC::ICONST : {
-                int i = g_codeMemory[g_ip++];
-                g_stack[++g_sp] = i;
+                iconst();
                 break;
             }
-            case BC::GLOAD: {
-                int addr = g_codeMemory[g_ip++];
-                int v = g_dataMemory[addr];
-                g_stack[++g_sp] = v;
-                break;
-            }
-            case BC::GSTORE : {
-                int v = g_stack[g_sp--];
-                int addr = g_codeMemory[g_ip++];
-                g_dataMemory[addr] = v;
-                break;
-            }
-            case BC::POP : {
-                break;
-            }
-            case BC::CALL : {
-                break;
-            }
-            case BC::RET : {
-                break;
-            }
+//            case BC::GLOAD: {
+//                int addr = g_codeMemory[g_ip++];
+//                int v = g_dataMemory[addr];
+//                g_stack[++g_sp] = v;
+//                break;
+//            }
+//            case BC::GSTORE : {
+//                int v = g_stack[g_sp--];
+//                int addr = g_codeMemory[g_ip++];
+//                g_dataMemory[addr] = v;
+//                break;
+//            }
+//            case BC::BC_POP : {
+//                break;
+//            }
+//            case BC::CALL : {
+//                break;
+//            }
+//            case BC::RET : {
+//                break;
+//            }
             case BC::HALT : {
-                g_running = false;
+                halt();
+//                g_running = false;
                 break;
             }
+
             case 0: {
                 g_running = false;
                 // code memory overflow?
@@ -127,12 +121,12 @@ void CPU::run(int argc, const char *argv[]) {
 }
 
 
-void CPU::loadInstructionSet(int instructions[]) {
+void CPU::loadInstructionSet(char instructions[]) {
     //TODO: load from file at some point
     std::printf("\r\n");
     for (int i = 0; i < codeSize; i++) {
-        g_codeMemory[i] = instructions[i];
-        std::printf("%04x",instructions[i]);
+        g_codeMemory[i] = (char)instructions[i];
+        std::printf("{{\\x%04x || %d}}\t",g_codeMemory[i],g_codeMemory[i]);
     }
     std::printf("\r\n");
 }

@@ -8,17 +8,15 @@
 
 class CPU {
 public:
-    int dataSize = 100;
-    int codeSize = 100;
-    int stackSize = 100;
-    int startPoint = 0;
+    int dataSize;
+    int codeSize;
+    int stackSize;
+    int startPoint;
 
     CPU();
     ~CPU();
-    void iprint(int msg);
-    void print(const char* msg);
     void run(int argc, const char *argv[]);
-    void loadInstructionSet(int instructions[]);
+    void loadInstructionSet(char instructions[]);
 
 };
 
