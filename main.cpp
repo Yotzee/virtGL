@@ -4,19 +4,21 @@
 
 using namespace std;
 
-int fp = 0;
-int ip = 0;
-int sp = 0;
+int fp = 0; //frame pointer
+int cp = 0; //code pointer
+int sp = 0; //stack pointer
 int *stack;
 int *codeMemory;
 int *dataMemory;
-//int codeMemory
-//int dataMemory = [];
 
-void init(int dataSize, int codeSize, int stackSize){
+void print(const char* msg){
+    cout << msg << endl;
+}
+
+void init(int dataSize, int codeSize, int stackSize, int startPoint){
     fp = 0;
-    ip = 0;
-    sp = 0;
+    cp = startPoint;
+    sp = -1;
     stack       = new int[  stackSize   ];
     codeMemory  = new int[  codeSize    ];
     dataMemory  = new int[  dataSize    ];
@@ -25,10 +27,14 @@ void init(int dataSize, int codeSize, int stackSize){
 
 bool CPU() {
     cout << "test" << endl;
-    int opcode = codeMemory[fp];
+    int opcode = codeMemory[cp++];
     switch (opcode) {
         case ByteCode::IADD : {
                 int x = stack[sp];
+            break;
+        }
+        case ByteCode::PRINT : {
+                print("test");
             break;
         }
         case ByteCode::HALT : {
