@@ -11,7 +11,7 @@ static int g_sp = -1; //g_stack pointer
 static char* g_stack;
 static char *g_codeMemory;
 static char *g_dataMemory;
-
+void (*g_instructionMap[255])() = {NULL};
 
 static bool g_running;
 static bool g_debug;

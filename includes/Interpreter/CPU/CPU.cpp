@@ -3,9 +3,8 @@
 //
 
 #include "../includes.h"
-#include "../Globals.h"
+//#include "../Globals.h"
 #include "CPU.h"
-#include "../ByteCodes/BC.h"
 #include "../Instructions/Math/Integer.h"
 #include "../Instructions/System/Print.h"
 #include "../Instructions/System/System.h"
@@ -15,13 +14,13 @@ CPU::CPU() {
 
 
     char instructions[] = {
-            BC::ICONST, 22,
-            BC::GISTORE, 0,
-            BC::GILOAD, 0,
-            BC::ICONST, 45,
-            BC::IADD,
-            BC::IPRINT,
-            BC::HALT,
+            ICONST, 22,
+            GISTORE, 0,
+            GILOAD, 0,
+            ICONST, 45,
+            IADD,
+            IPRINT,
+            HALT,
     };
 
 
@@ -43,9 +42,14 @@ CPU::CPU() {
     g_dataMemory = (char*)malloc(stackSize * sizeof(char));
     memset(g_dataMemory, 0, dataSize * sizeof(char));
 
+    //g_instructionMap = malloc(INT_MAX * sizeof(void));
+    //memset(g_instructionMap, 0, INT_MAX * sizeof(void));
 
     loadInstructionSet(instructions);
 
+    print_init();
+    integer_init();
+    system_init();
 };
 
 CPU::~CPU() {
@@ -64,66 +68,46 @@ void CPU::run(int argc, const char *argv[]) {
         }
 
         g_ip++;
-
-        switch (opcode) {
-
-            case BC::IADD : {
-                iadd();
-                break;
-            }
-            case BC::ISUB : {
-                break;
-            }
-            case BC::IPRINT : {
-                iprint();
-                break;
-            }
-            case BC::ICONST : {
-                iconst();
-                break;
-            }
-            case BC::GISTORE : {
-                gistore();
-                break;
-            }
-            case BC::GILOAD : {
-                giload();
-                break;
-            }
-//            case BC::GLOAD: {
-//                int addr = g_codeMemory[g_ip++];
-//                int v = g_dataMemory[addr];
-//                g_stack[++g_sp] = v;
+        g_instructionMap[opcode]();
+//
+//        switch (opcode) {
+//
+//            case BC::IADD : {
+//                //iadd();
+//                g_instructionMap[BC::IADD]();
 //                break;
 //            }
-//            case BC::GSTORE : {
-//                int v = g_stack[g_sp--];
-//                int addr = g_codeMemory[g_ip++];
-//                g_dataMemory[addr] = v;
+//            case BC::ISUB : {
 //                break;
 //            }
-//            case BC::BC_POP : {
+//            case BC::IPRINT : {
+//                iprint();
 //                break;
 //            }
-//            case BC::CALL : {
+//            case BC::ICONST : {
+//                iconst();
 //                break;
 //            }
-//            case BC::RET : {
+//            case BC::GISTORE : {
+//                gistore();
 //                break;
 //            }
-            case BC::HALT : {
-                halt();
+//            case BC::GILOAD : {
+//                giload();
+//                break;
+//            }
+//            case BC::HALT : {
+//                halt();
+//                break;
+//            }
+//
+//            case 0: {
 //                g_running = false;
-                break;
-            }
-
-            case 0: {
-                g_running = false;
-                // code memory overflow?
-                std::printf("%s", "code memory overflow?");
-                break;
-            }
-        }
+//                // code memory overflow?
+//                std::printf("%s", "code memory overflow?");
+//                break;
+//            }
+//        }
     }
 
 }

@@ -6,7 +6,10 @@
 #define VIRTGL_FLOAT_H
 
 #include "../../Globals.h"
-
+static const int FADD = 0x25;
+static const int FSUB = 0x26;
+static const int FMUL = 0x27;
+static const int FDIV = 0x28;
 
 void fadd( ){
     float b = g_stack[g_sp--];

@@ -1,7 +1,7 @@
 //
 // Created by Greg Yotz on 5/31/16.
 //
-#include "../Globals.h"
+
 #ifndef VIRTGL_CPU_H
 #define VIRTGL_CPU_H
 
