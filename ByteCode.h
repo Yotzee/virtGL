@@ -6,7 +6,7 @@
 #define VIRTGL_BYTECODE_H
 
 static enum ByteCode{
-    HALT = 0x100, // system codes
+    HALT = 0x10, // system codes
     ICONST,PRINT,
     IADD,ISUB,IMUL,IDIV, //integer math codes
     FADD,FSUB,FMUL,FDIV  //float math codes
