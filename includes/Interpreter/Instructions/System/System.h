@@ -8,27 +8,58 @@
 #include "../../Globals.h"
 
 
-static const int BPOP = 0x01;
+static const int POP = 0x01;
+void pop(){
+
+}
+
 static const int PUSH = 0x02;
+void push(){
+
+}
+
+static const int DEBUG = 0x04;
+void debug(){
+    g_debug = true;
+}
 
 static const int RET = 0x07;
+void ret(){
+
+}
+
 static const int CALL = 0x08;
+void call(){
+    int addr = g_codeMemory[g_ip++];
+    int args = g_codeMemory[g_ip++];
+    g_stack[++g_sp] = args;
+    g_stack[++g_sp] = g_fp;
+    g_stack[++g_sp] = g_ip;
+    g_fp = g_sp;
+    g_ip = addr;
+}
+
+
+/*
+static const int ISTORE = 0x14;
+void istore(){
+
+}
+
+static const int ILOAD = 0x14;
+void iload(){
+
+}
+*/
+
 static const int ICONST = 0x09;
-static const int HALT = 0x10;
-
-static const int GISTORE = 0x12;
-static const int GILOAD = 0x13;
-
-static const int STORE = 0x14;
-static const int LOAD = 0x14;
-
 void iconst(){
 
     int i = (int)g_codeMemory[g_ip++];
     g_stack[++g_sp] = i;
 }
 
-
+static const int GISTORE = 0x12;
 void giload(){
     int addr = (int)g_codeMemory[g_ip++];
     int v = (int)g_dataMemory[addr];
@@ -36,6 +67,7 @@ void giload(){
 
 }
 
+static const int GILOAD = 0x13;
 void gistore(){
     int v = (int)g_stack[g_sp--];
     int addr = (int)g_codeMemory[g_ip++];
@@ -43,11 +75,15 @@ void gistore(){
 
 }
 
+static const int HALT = 0x10;
 void halt(){
     g_running = false;
 }
 
 void system_init() {
+    g_instructionMap[CALL] = &call;
+    g_instructionMap[RET] = &ret;
+    g_instructionMap[DEBUG] = &debug;
     g_instructionMap[HALT] = &halt;
     g_instructionMap[GISTORE] = &gistore;
     g_instructionMap[GILOAD] = &giload;

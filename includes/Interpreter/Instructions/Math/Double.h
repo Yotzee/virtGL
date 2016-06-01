@@ -36,7 +36,7 @@ void ddivid(){
     g_stack[++g_sp] = a / b;
 }
 
-void float_init(){
+void double_init(){
     g_instructionMap[DADD] = &dadd;
     g_instructionMap[DSUB] = &dsubtract;
     g_instructionMap[DMUL] = &dmultipuly;

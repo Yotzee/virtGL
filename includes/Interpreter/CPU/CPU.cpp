@@ -8,6 +8,9 @@
 #include "../Instructions/Math/Integer.h"
 #include "../Instructions/System/Print.h"
 #include "../Instructions/System/System.h"
+#include "../Instructions/Math/Float.h"
+#include "../Instructions/Math/Double.h"
+
 
 CPU::CPU() {
     g_running = true;
@@ -15,6 +18,8 @@ CPU::CPU() {
     print_init();
     integer_init();
     system_init();
+    float_init();
+    double_init();
 };
 
 CPU::~CPU() {
@@ -26,14 +31,22 @@ CPU::~CPU() {
 
 void CPU::run(int argc, const char *argv[]) {
 
-    char instructions[] = {
-            ICONST, 25,
-            GISTORE, 0,
-            GILOAD, 0,
-            ICONST, 5,
-            IDIV,
-            IPRINT,
-            HALT,
+    int instructions[] = {
+            CALL, 19, 0, //3+
+            DEBUG,      //1+
+            ICONST, 25, //2+
+            GISTORE, 0, //2+
+            GILOAD, 0,  //2+
+            ICONST, 5,  //2+
+            IADD,       //1+
+            GISTORE,1,  //2+
+            GILOAD,0,   //2+
+            GILOAD,1,   //2+
+            ICONST,55,  //2+
+            ICONST,20, //2
+            ISUB,       //1
+            IPRINT,     //1
+            HALT,       //1
     };
 
 
@@ -60,10 +73,6 @@ void CPU::run(int argc, const char *argv[]) {
 
 
 
-
-
-
-    g_debug = true;
     while (g_running) {
         int opcode = (int)g_codeMemory[g_ip];
         if(g_debug){
@@ -77,11 +86,11 @@ void CPU::run(int argc, const char *argv[]) {
 }
 
 
-void CPU::loadInstructionSet(char instructions[]) {
+void CPU::loadInstructionSet(int instructions[]) {
     //TODO: load from file at some point
     std::printf("\r\n");
     for (int i = 0; i < codeSize; i++) {
-        g_codeMemory[i] = (char)instructions[i];
+        g_codeMemory[i] = instructions[i];
         std::printf("{{\\x%04x || %d}}\t",g_codeMemory[i],g_codeMemory[i]);
     }
     std::printf("\r\n");
