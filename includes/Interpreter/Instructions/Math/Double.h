@@ -6,7 +6,12 @@
 #define VIRTGL_DOUBLE_H
 #include "../../Globals.h"
 
-//TODO: change to doubles and double stack
+static const int DADD = 0x41;
+static const int DSUB = 0x42;
+static const int DMUL = 0x43;
+static const int DDIV = 0x44;
+
+
 void dadd( ){
     double b = g_stack[g_sp--];
     double a = g_stack[g_sp--];
@@ -31,4 +36,10 @@ void ddivid(){
     g_stack[++g_sp] = a / b;
 }
 
+void float_init(){
+    g_instructionMap[DADD] = &dadd;
+    g_instructionMap[DSUB] = &dsubtract;
+    g_instructionMap[DMUL] = &dmultipuly;
+    g_instructionMap[DDIV] = &ddivid;
+}
 #endif //VIRTGL_DOUBLE_H

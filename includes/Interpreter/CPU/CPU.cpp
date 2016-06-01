@@ -12,17 +12,29 @@
 CPU::CPU() {
     g_running = true;
 
+    print_init();
+    integer_init();
+    system_init();
+};
+
+CPU::~CPU() {
+
+    free(g_stack);
+    free(g_codeMemory);
+    free(g_dataMemory);
+};
+
+void CPU::run(int argc, const char *argv[]) {
 
     char instructions[] = {
-            ICONST, 22,
+            ICONST, 25,
             GISTORE, 0,
             GILOAD, 0,
-            ICONST, 45,
-            IADD,
+            ICONST, 5,
+            IDIV,
             IPRINT,
             HALT,
     };
-
 
 
     g_fp = 0;
@@ -42,24 +54,15 @@ CPU::CPU() {
     g_dataMemory = (char*)malloc(stackSize * sizeof(char));
     memset(g_dataMemory, 0, dataSize * sizeof(char));
 
-    //g_instructionMap = malloc(INT_MAX * sizeof(void));
-    //memset(g_instructionMap, 0, INT_MAX * sizeof(void));
 
     loadInstructionSet(instructions);
 
-    print_init();
-    integer_init();
-    system_init();
-};
 
-CPU::~CPU() {
 
-    free(g_stack);
-    free(g_codeMemory);
-    free(g_dataMemory);
-};
 
-void CPU::run(int argc, const char *argv[]) {
+
+
+
     g_debug = true;
     while (g_running) {
         int opcode = (int)g_codeMemory[g_ip];
@@ -69,45 +72,6 @@ void CPU::run(int argc, const char *argv[]) {
 
         g_ip++;
         g_instructionMap[opcode]();
-//
-//        switch (opcode) {
-//
-//            case BC::IADD : {
-//                //iadd();
-//                g_instructionMap[BC::IADD]();
-//                break;
-//            }
-//            case BC::ISUB : {
-//                break;
-//            }
-//            case BC::IPRINT : {
-//                iprint();
-//                break;
-//            }
-//            case BC::ICONST : {
-//                iconst();
-//                break;
-//            }
-//            case BC::GISTORE : {
-//                gistore();
-//                break;
-//            }
-//            case BC::GILOAD : {
-//                giload();
-//                break;
-//            }
-//            case BC::HALT : {
-//                halt();
-//                break;
-//            }
-//
-//            case 0: {
-//                g_running = false;
-//                // code memory overflow?
-//                std::printf("%s", "code memory overflow?");
-//                break;
-//            }
-//        }
     }
 
 }
