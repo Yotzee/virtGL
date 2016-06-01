@@ -34,6 +34,7 @@ void CPU::run(int argc, const char *argv[]) {
     std::printf("%d",inSize);
     int instructions[] = {
             DEBUG,      //1+
+            MAIN, 3,
             CALL, 19, 0, //3+
             ICONST, 25, //2+
             GISTORE, 0, //2+

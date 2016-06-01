@@ -6,29 +6,32 @@
 #define VIRTGL_FLOAT_H
 
 #include "../../Globals.h"
-static const int FADD = 0x31;
-static const int FSUB = 0x32;
-static const int FMUL = 0x33;
-static const int FDIV = 0x34;
 
+
+
+
+static const int FADD = 0x25;
 void fadd( ){
     float b = g_stack[g_sp--];
     float a = g_stack[g_sp--];
     g_stack[++g_sp] = a + b;
 }
 
+static const int FDIV = 0x26;
 void fsubtract(){
     float b = g_stack[g_sp--];
     float a = g_stack[g_sp--];
     g_stack[++g_sp] = a - b;
 }
 
+static const int FMUL = 0x27;
 void fmultipuly(){
     float b = g_stack[g_sp--];
     float a = g_stack[g_sp--];
     g_stack[++g_sp] = a * b;
 }
 
+static const int FSUB = 0x28;
 void fdivid(){
     float b = g_stack[g_sp--];
     float a = g_stack[g_sp--];

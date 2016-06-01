@@ -7,6 +7,9 @@ Implemented Instructions
 System
 
     Operator    Instruction     Description
+    PUSH        0x01            PUSH
+    POP         0x02            POP
+    MAIN        0x05            Sets Main ip
     DEBUG       0x06            Sets Debug Flag to true
     CALL        0x07            Call function
     RET         0x08            Return from Function
@@ -28,3 +31,7 @@ Maths
     FSUB        0x26            Float Subtract
     FMUL        0x27            Float Multiply
     FDIV        0x28            Float Divid
+    DADD        0x29            Double Add
+    DSUB        0x30            Double Subtract
+    DMUL        0x31            Double Multiply
+    DDIV        0x32            Double Divid

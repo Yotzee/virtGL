@@ -6,30 +6,33 @@
 #define VIRTGL_DOUBLE_H
 #include "../../Globals.h"
 
-static const int DADD = 0x41;
-static const int DSUB = 0x42;
-static const int DMUL = 0x43;
-static const int DDIV = 0x44;
 
 
+
+
+
+static const int DADD = 0x29;
 void dadd( ){
     double b = g_stack[g_sp--];
     double a = g_stack[g_sp--];
     g_stack[++g_sp] = a + b;
 }
 
+static const int DSUB = 0x30;
 void dsubtract(){
     double b = g_stack[g_sp--];
     double a = g_stack[g_sp--];
     g_stack[++g_sp] = a - b;
 }
 
+static const int DMUL = 0x31;
 void dmultipuly(){
     double b = g_stack[g_sp--];
     double a = g_stack[g_sp--];
     g_stack[++g_sp] = a * b;
 }
 
+static const int DDIV = 0x32;
 void ddivid(){
     double b = g_stack[g_sp--];
     double a = g_stack[g_sp--];

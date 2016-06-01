@@ -8,7 +8,7 @@
 #include "../../includes.h"
 #include "../../Globals.h"
 
-static const int IPRINT = 0x11;
+
 
 void print(int msg){
     std::printf("%d\r\n",msg);
@@ -22,6 +22,7 @@ void print(const char* msg){
     std::printf("%s\r\n",msg);
 }
 
+static const int IPRINT = 0x11;
 void iprint(){
     int i = g_stack[g_sp--];
     print(i);

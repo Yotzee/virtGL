@@ -18,17 +18,12 @@ void push(){
 
 }
 
-static const int DEBUG = 0x04;
+static const int DEBUG = 0x06;
 void debug(){
     g_debug = true;
 }
 
-static const int RET = 0x07;
-void ret(){
-
-}
-
-static const int CALL = 0x08;
+static const int CALL = 0x07;
 void call(){
     int addr = g_codeMemory[g_ip++];
     int args = g_codeMemory[g_ip++];
@@ -37,6 +32,11 @@ void call(){
     g_stack[++g_sp] = g_ip;
     g_fp = g_sp;
     g_ip = addr;
+}
+
+static const int RET = 0x08;
+void ret(){
+
 }
 
 
@@ -51,11 +51,13 @@ void iload(){
 
 }
 */
-static const int MAIN = 0x07;
-void main(){
-
+static const int MAIN = 0x05;
+void setmain(){
+    int i = (int)g_codeMemory[g_ip++];
+    g_ip = i;
 }
-static const int ICONST = 0x09;
+
+static const int ICONST = 0x10;
 void iconst(){
 
     int i = (int)g_codeMemory[g_ip++];
@@ -84,6 +86,7 @@ void halt(){
 }
 
 void system_init() {
+    g_instructionMap[MAIN] = &setmain;
     g_instructionMap[CALL] = &call;
     g_instructionMap[RET] = &ret;
     g_instructionMap[DEBUG] = &debug;
