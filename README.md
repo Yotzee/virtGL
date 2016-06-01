@@ -2,6 +2,7 @@
 OpenGL based Graphic Engine
 
 ##ByteCodes
+Implemented Instructions
 
 System
 
@@ -9,7 +10,8 @@ System
     HALT        0x10            HALT VM
     ICONST      0x09            Push Integer onto Stack
     IPRINT      0x11            Integer Print
-
+    GSTORE      0x12            stack to datamemory at addr
+    GLOAD       0x13            move datamemory at addr to stack
 
 
 Maths
