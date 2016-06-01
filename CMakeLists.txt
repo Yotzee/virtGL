@@ -3,5 +3,5 @@ project(virtGL)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-set(SOURCE_FILES main.cpp ByteCode.h)
+set(SOURCE_FILES main.cpp includes/BC.h includes/BC.cpp)
 add_executable(virtGL ${SOURCE_FILES})

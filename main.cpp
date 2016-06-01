@@ -1,5 +1,5 @@
 #include <iostream>
-#include "ByteCode.h"
+#include "includes/BC.h"
 
 
 using namespace std;
@@ -28,41 +28,50 @@ void CPU() {
     ip++;
 
     switch (opcode) {
-        case ByteCode::IADD : {
+        case BC::IADD : {
             int b = stack[sp--];
             int a = stack[sp--];
             stack[++sp] = a + b;
             break;
         }
-        case ByteCode::ISUB : {
+        case BC::ISUB : {
             int b = stack[sp--];
             int a = stack[sp--];
             stack[++sp] = a - b;
             break;
         }
-        case ByteCode::IPRINT : {
+        case BC::IPRINT : {
             int i = stack[sp--];
             iprint(i);
             break;
         }
-        case ByteCode::ICONST : {
+        case BC::ICONST : {
             int i = codeMemory[ip++];
             stack[++sp] = i;
             break;
         }
-        case ByteCode::GLOAD: {
+        case BC::GLOAD: {
             int addr = codeMemory[ip++];
             int v = dataMemory[addr];
             stack[++sp] = v;
             break;
         }
-        case ByteCode::GSTORE : {
+        case BC::GSTORE : {
             int v = stack[sp--];
             int addr = codeMemory[ip++];
             dataMemory[addr] = v;
             break;
         }
-        case ByteCode::HALT : {
+        case BC::POP : {
+            break;
+        }
+        case BC::CALL : {
+            break;
+        }
+        case BC::RET : {
+            break;
+        }
+        case BC::HALT : {
             _running = false;
             break;
         }
@@ -76,25 +85,20 @@ void CPU() {
 
 const int instructions[] = {
 
-        ByteCode::ICONST, 455,
-        ByteCode::GSTORE, 1,
-        ByteCode::GLOAD, 1,
-        ByteCode::ICONST, 45,
-        ByteCode::IADD,
-        ByteCode::IPRINT,
-        ByteCode::HALT,
+        BC::ICONST, 800,
+        BC::GSTORE, 1,
+        BC::GLOAD, 1,
+        BC::ICONST, 45,
+        BC::IADD,
+        BC::IPRINT,
+        BC::HALT,
 };
 
 void loadInstructionSet() {
     //TODO: load from file at some point
-
-    int i = 0;
-    for (i = 0; i < sizeof(instructions); i++) {
+    for (int i = 0; i < sizeof(instructions); i++) {
         codeMemory[i] = instructions[i];
     }
-
-    cout << "nInstructions: " << i << endl;
-
 }
 
 int main(int argc, const char *argv[]) {
@@ -110,8 +114,13 @@ int main(int argc, const char *argv[]) {
     sp = -1;
 
     stack = new int[stackSize];
+    memset(stack,0,stackSize * sizeof(int));
+
     codeMemory = new int[codeSize];
+    memset(codeMemory,0,codeSize * sizeof(int));
+
     dataMemory = new int[dataSize];
+    memset(dataMemory,0,dataSize * sizeof(int));
 
     loadInstructionSet();
 
