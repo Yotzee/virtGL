@@ -113,11 +113,11 @@ void CPU::run() {
                 break;
             }
             case BC::HALT : {
-                _running = false;
+                running = false;
                 break;
             }
             case 0: {
-                _running = false;
+                running = false;
                 // code memory overflow?
                 std::printf("%s", "code memory overflow?");
                 break;
