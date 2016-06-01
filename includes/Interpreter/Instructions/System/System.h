@@ -13,6 +13,21 @@ void iconst(){
     g_stack[++g_sp] = i;
 }
 
+
+void giload(){
+    int addr = (int)g_codeMemory[g_ip++];
+    int v = (int)g_dataMemory[addr];
+    g_stack[++g_sp] = v;
+
+}
+
+void gistore(){
+    int v = (int)g_stack[g_sp--];
+    int addr = (int)g_codeMemory[g_ip++];
+    g_dataMemory[addr] = v;
+
+}
+
 void halt(){
     g_running = false;
 }

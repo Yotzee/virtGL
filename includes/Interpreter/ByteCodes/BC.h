@@ -22,8 +22,8 @@ public:
     static const int HALT = 0x10;
     static const int IPRINT = 0x11;
 
-    static const int GSTORE = 0x12;
-    static const int GLOAD = 0x13;
+    static const int GISTORE = 0x12;
+    static const int GILOAD = 0x13;
 
     static const int STORE = 0x14;
     static const int LOAD = 0x14;

@@ -15,9 +15,9 @@ CPU::CPU() {
 
 
     char instructions[] = {
-            BC::ICONST, 55,
-            //BC::GSTORE, 0,
-            //BC::GLOAD, 0,
+            BC::ICONST, 22,
+            BC::GISTORE, 0,
+            BC::GILOAD, 0,
             BC::ICONST, 45,
             BC::IADD,
             BC::IPRINT,
@@ -80,6 +80,14 @@ void CPU::run(int argc, const char *argv[]) {
             }
             case BC::ICONST : {
                 iconst();
+                break;
+            }
+            case BC::GISTORE : {
+                gistore();
+                break;
+            }
+            case BC::GILOAD : {
+                giload();
                 break;
             }
 //            case BC::GLOAD: {
