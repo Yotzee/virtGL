@@ -7,13 +7,14 @@ Implemented Instructions
 System
 
     Operator    Instruction     Description
-    CALL        0x08            Call function
-    RET         0x07            Return from Function
-    HALT        0x10            HALT VM
-    ICONST      0x09            Push Integer onto Stack
+    DEBUG       0x06            Sets Debug Flag to true
+    CALL        0x07            Call function
+    RET         0x08            Return from Function
+    HALT        0x09            HALT VM
+    ICONST      0x10            Push Integer onto Stack
     IPRINT      0x11            Integer Print
-    GSTORE      0x12            g_stack to datamemory at addr
-    GLOAD       0x13            move datamemory at addr to g_stack
+    GISTORE     0x12            g_stack to datamemory at addr
+    GILOAD      0x13            move datamemory at addr to g_stack
 
 
 Maths
