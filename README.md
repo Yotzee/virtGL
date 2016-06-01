@@ -7,6 +7,8 @@ Implemented Instructions
 System
 
     Operator    Instruction     Description
+    CALL        0x08            Call function
+    RET         0x07            Return from Function
     HALT        0x10            HALT VM
     ICONST      0x09            Push Integer onto Stack
     IPRINT      0x11            Integer Print
