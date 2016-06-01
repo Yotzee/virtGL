@@ -1,8 +1,9 @@
 //
 // Created by Greg Yotz on 5/31/16.
 //
-#include "BC.h"
 
+#include "../includes.h"
+#include "BC.h"
 
 BC::BC() {
     //BC Constructor

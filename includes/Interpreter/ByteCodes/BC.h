@@ -1,10 +1,10 @@
 //
 // Created by Greg Yotz on 5/31/16.
 //
-
+#include "../Globals.h"
 #ifndef VIRTGL_BYTECODE_H
 #define VIRTGL_BYTECODE_H
-#include <iostream>
+
 
 class BC {
 public:
@@ -15,31 +15,32 @@ public:
 
     int* instructions = NULL;
 
-    static const int POP = 1;
-    static const int PUSH = 2;
-
-    static const int RET = 3;
-    static const int CALL = 4;
-    static const int ICONST = 5;
-    static const int HALT = 6;
-    static const int IPRINT = 7;
-
-    static const int GSTORE = 8;
-    static const int GLOAD = 9;
-
-    static const int STORE = 10;
-    static const int LOAD = 11;
-
-    static const int IADD = 12;
-    static const int ISUB = 13;
-    static const int IMUL = 14;
-    static const int IDIV = 15;
-    static const int FADD = 16;
-    static const int FSUB = 17;
-    static const int FMUL = 18;
-    static const int FDIV = 19;
 
 
+    static const int POP = 0x01;
+    static const int PUSH = 0x02;
+
+    static const int RET = 0x07;
+    static const int CALL = 0x08;
+    static const int ICONST = 0x09;
+    static const int HALT = 0x10;
+    static const int IPRINT = 0x11;
+
+    static const int GSTORE = 0x12;
+    static const int GLOAD = 0x13;
+
+    static const int STORE = 0x14;
+    static const int LOAD = 0x14;
+
+    static const int IADD = 0x21;
+    static const int ISUB = 0x22;
+    static const int IMUL = 0x23;
+    static const int IDIV = 0x24;
+
+    static const int FADD = 0x25;
+    static const int FSUB = 0x26;
+    static const int FMUL = 0x27;
+    static const int FDIV = 0x28;
 
 
 };
