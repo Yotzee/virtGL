@@ -6,6 +6,7 @@
 #define VIRTGL_INCLUDES_H
 
 #include <iostream>
+#include <regex>
 using namespace std;
 
 #endif //VIRTGL_INCLUDES_H

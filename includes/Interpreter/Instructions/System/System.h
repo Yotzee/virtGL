@@ -36,6 +36,13 @@ void call(){
 
 static const int RET = 0x08;
 void ret(){
+    int rValue = g_stack[g_sp--];
+    g_sp = g_fp;
+    g_ip = g_stack[g_sp--];
+    g_fp = g_stack[g_sp--];
+    int nargs = g_stack[g_sp--];
+    g_sp -= nargs;
+    g_stack[++g_sp] = rValue;
 
 }
 

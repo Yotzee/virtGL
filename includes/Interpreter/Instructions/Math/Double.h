@@ -6,11 +6,6 @@
 #define VIRTGL_DOUBLE_H
 #include "../../Globals.h"
 
-
-
-
-
-
 static const int DADD = 0x29;
 void dadd( ){
     double b = g_stack[g_sp--];

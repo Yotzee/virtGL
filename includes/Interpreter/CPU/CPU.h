@@ -17,6 +17,7 @@ public:
     ~CPU();
     void run(int argc, const char *argv[]);
     void loadInstructionSet(int instructions[]);
+    void Log(const char* msg);
 
 };
 

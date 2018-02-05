@@ -11,7 +11,6 @@
 #include "../Instructions/Math/Float.h"
 #include "../Instructions/Math/Double.h"
 
-
 CPU::CPU() {
     g_running = true;
 
@@ -30,7 +29,7 @@ CPU::~CPU() {
 };
 
 void CPU::run(int argc, const char *argv[]) {
-    int inSize = sizeof(int);
+    auto inSize = sizeof(int);
     std::printf("%d",inSize);
     int instructions[] = {
             DEBUG,      //1+
@@ -74,24 +73,40 @@ void CPU::run(int argc, const char *argv[]) {
 
 
 
-
+    std::time_t timevStart;
+    std::time(&timevStart);
+    std::printf("Start Time : %d",timevStart);
     while (g_running) {
+
+
+
         int opcode = (int)g_codeMemory[g_ip];
+
         if(g_debug){
-            std::printf("g_ip:%04d\t opcode:%d\r\n", g_ip, opcode);
+
+            std::printf("g_ip:%04d\topcode:%d\tfile%s: Line: %d\r\n ", g_ip, opcode, __FILE__, __LINE__);
         }
 
         g_ip++;
         g_instructionMap[opcode]();
+
     }
+    std::time_t timev;
+    std::time(&timev);
+    long timeDelta =  timev - timevStart;
+    std::printf("%d",timeDelta);
 
 }
 
+void CPU::Log(const char* msg){
+
+    std::printf(msg);
+}
 
 void CPU::loadInstructionSet(int instructions[]) {
     //TODO: load from file at some point
     std::printf("\r\n");
-    for (int i = 0; i < codeSize; i++) {
+    for (auto i = 0; i < codeSize; i++) {
         g_codeMemory[i] = instructions[i];
         std::printf("{{\\x%04x || %d}}\t",g_codeMemory[i],g_codeMemory[i]);
     }
